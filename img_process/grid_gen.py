@@ -14,10 +14,20 @@ def grid_gen():
             points.append([x,y])
     return points
 
+def reflect_y(pt, axis):
+    """
+    Reflect the x value of pt about the given x-value
+    """
+    delta = pt[0] - axis
+    new_x = pt[0] - 2 * delta
+    return [new_x, pt[1]]
+
 if __name__ == "__main__": 
     from matplotlib import pyplot as pl
 
     pts = grid_gen()
+    refl_pts = list([reflect_y(x, 4) for x in pts])
+    pts = pts + refl_pts
     args = zip(*pts)
     pl.scatter(*args)
     pl.show()

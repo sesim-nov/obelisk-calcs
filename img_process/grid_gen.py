@@ -94,6 +94,12 @@ def transform(pt, scales, theta, translation):
     Q = Quaternion.from_axis_angle(theta, 0,0,1)
     return translate(rotate(scale(pt, *scales), Q), *translation)
 
+def make_grid(scales, theta, translation):
+    pts = grid_gen()
+    refl_pts = list([reflect_y(x, 4) for x in pts])
+    pts = pts + refl_pts
+    return list([transform(n, scales, theta, translation) for n in pts])
+
 if __name__ == "__main__": 
     from matplotlib import pyplot as pl
 

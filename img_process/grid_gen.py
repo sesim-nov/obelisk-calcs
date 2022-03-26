@@ -84,6 +84,16 @@ def rotate(pt, rotation):
     rotated = rotation.ham_prod(pt_q).ham_prod(rotation.conjugate())
     return [rotated.i, rotated.j]
 
+def translate(pt, dx, dy):
+    return [pt[0] + dx, pt[1] + dy]
+
+def scale(pt, x_scale, y_scale):
+    return [pt[0] * x_scale, pt[1] * y_scale]
+
+def transform(pt, scales, theta, translation):
+    Q = Quaternion.from_axis_angle(theta, 0,0,1)
+    return translate(rotate(scale(pt, *scales), Q), *translation)
+
 if __name__ == "__main__": 
     from matplotlib import pyplot as pl
 
@@ -92,9 +102,8 @@ if __name__ == "__main__":
     pts = pts + refl_pts
 
     theta = 15 * pi / 180.0
-    Q = Quaternion.from_axis_angle(theta, 0,0,1)
-    rot_pts = list([rotate(n, Q) for n in pts])
+    plot_pts = [transform(n, [2,2], theta, [5,5]) for n in pts]
 
-    args = zip(*rot_pts)
+    args = zip(*plot_pts)
     pl.scatter(*args)
     pl.show()

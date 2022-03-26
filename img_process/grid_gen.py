@@ -63,9 +63,9 @@ def grid_gen():
     x_scale = 0.866025 # Triangles!
     for i in range(4, 9):
         x = (i - 4) * x_scale
-        y_start = (i - 4) * y_scale * 0.5
+        y_start = (i - 4) * y_scale * -0.5
         for j in range(i):
-            y = y_start - (j * y_scale)
+            y = y_start + (j * y_scale)
             points.append([x,y])
     return points
 
